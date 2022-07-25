@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-export const CustomInputStyle = styled('div')(({ theme }: any) => {
+export const LeftBoxStyle = styled('div')(({ theme }: any) => {
   return {
     position: 'relative',
     [theme.breakpoints.up('sm')]: {
