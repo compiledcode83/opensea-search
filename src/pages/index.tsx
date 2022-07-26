@@ -2,7 +2,7 @@ import { Grid, Box } from '@mui/material'
 import type { NextPage } from 'next'
 import LeftBox from '../components/LeftBox'
 import RightBox from '../components/RightBox'
-import { HomeStyle } from './index.style'
+import { HomeStyle } from '../styles/home.style'
 
 const Home: NextPage = () => {
   return (

@@ -74,7 +74,7 @@ if (typeof window !== 'undefined') {
 type StateType = {
   provider?: any
   web3Provider?: any
-  address: string
+  address?: string
   chainId?: number
 }
 
@@ -101,8 +101,8 @@ type ActionType =
 const initialState: StateType = {
   provider: null,
   web3Provider: null,
-  address: null,
-  chainId: null,
+  address: '',
+  chainId: 0,
 }
 
 const reducer = (state: StateType, action: ActionType): StateType => {
