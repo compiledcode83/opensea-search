@@ -28,7 +28,7 @@ const RightBox: React.FC = () => {
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Grid container spacing={2}>
           {nfts &&
-            nfts.map((nft, i) => (
+            nfts.map((nft: any, i) => (
               <Grid key={i} item xs={6} sm={4} md={4} lg={3}>
                 <NftCard
                   image={nft.image_preview_url}
