@@ -3,9 +3,10 @@ import styled from '@emotion/styled'
 export const CustomInputStyle = styled('div')(({ theme }: any) => {
   return {
     position: 'relative',
-    [theme.breakpoints.up('sm')]: {
+    marginBottom: '1rem',
+    [theme.breakpoints.up('md')]: {
       '.MuiInput-root': {
-        minWidth: '22.5rem',
+        minWidth: '17.5rem',
       }
     },
     '.MuiInput-root': {
@@ -21,18 +22,18 @@ export const CustomInputStyle = styled('div')(({ theme }: any) => {
       },
 
       '&:hover': {
-        borderColor: '#c6d0eb'
+        borderColor: '#96a0bb'
       },
 
       '&:focus-within': {
-        borderColor: '#c6d0eb'
+        borderColor: '#96a0bb'
       },
 
       input: {
         flex: 1,
         fontSize: '1rem',
         fontWeight: 300,
-        color: '#c6d0eb',
+        color: '#8690ab',
         padding: '0.375rem 1.25rem',
         transformOrigin: 'center left',
         transform: 'scale(0.875)',

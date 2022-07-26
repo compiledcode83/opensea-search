@@ -1,17 +1,21 @@
-import { Grid } from '@mui/material'
+import { Grid, Box } from '@mui/material'
 import type { NextPage } from 'next'
 import LeftBox from '../components/LeftBox'
 import RightBox from '../components/RightBox'
-import SearchBox from '../components/SearchBox'
+import { HomeStyle } from './index.style'
 
 const Home: NextPage = () => {
   return (
-    <>
-      <Grid className="">
-        <LeftBox />
-        <RightBox />
+    <HomeStyle>
+      <Grid container spacing={2}>
+        <Grid item sm={12} md={4}>
+          <LeftBox/>
+        </Grid>
+        <Grid item sm={12} md={8}>
+          <RightBox />
+        </Grid>
       </Grid>
-    </>
+    </HomeStyle>
   )
 }
 

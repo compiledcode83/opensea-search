@@ -27,7 +27,7 @@ const nftsSlice = createSlice({
   name: "nft",
   initialState: initialState,
   reducers: {
-    nftRequest(state: nftsState) {
+    nftRequest(state: nftsState, action) {
       state.isLoading = true
     },
     nftRequestSuccess(state: nftsState, action: PayloadAction<ProtoType>) {

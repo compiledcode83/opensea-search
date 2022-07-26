@@ -1,7 +1,7 @@
 import {
   Box,
   Grid,
-  Input
+  LinearProgress
 } from '@mui/material'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,16 +17,16 @@ const RightBox: React.FC = () => {
   const isLoading = useSelector((state: RootState) => state.nft.isLoading)
 
   useEffect(() => {
-    dispatch(nftRequest())
+    dispatch(nftRequest({}))
   }, [])
   return (
     <RightBoxStyle>
-      {isLoading && "loading..." }
+      {isLoading && <LinearProgress /> }
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Grid container spacing={2}>
           {nfts &&
             nfts.map((nft, i) => (
-              <Grid key={i} item xs={6} sm={3} md={3} lg={3}>
+              <Grid key={i} item xs={6} sm={4} md={4} lg={3}>
                 <NftCard
                   image={nft.image_preview_url}
                   name={nft.name}

@@ -10,7 +10,8 @@ import {
 export function* nftRequestSaga (action: any) {
   try {
     const { data } = yield call(
-      nftApi.requestNft
+      nftApi.requestNft,
+      action.payload
     )
     if (data) {
       yield put(nftRequestSuccess(data))

@@ -8,7 +8,7 @@ import { CustomInputStyle } from './index.style'
 interface Props {
   value: string,
   placeholder: string,
-  onChange: () => void,
+  onChange: (e: any) => void,
 }
 
 const CustomInput: React.FC<Props> = (props) => {

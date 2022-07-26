@@ -1,11 +1,7 @@
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
-import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined'
-import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
 import { NftCardStyle } from './index.style'
 
 export const formatAmount = (amount: any, min = 2, max = 4) => {
@@ -33,7 +29,7 @@ const NftCard: React.FC<any> = (props: any) => {
     price,
     date
   } = props
-  const dimension = '232px'
+  const dimension = '176px'
   const mobileDimension = '144px'
 
   return (
