@@ -1,6 +1,7 @@
 import {
   Box,
   Grid,
+  Alert,
   LinearProgress
 } from '@mui/material'
 import React, { useEffect } from 'react'
@@ -15,6 +16,7 @@ const RightBox: React.FC = () => {
   const dispatch = useDispatch()
   const nfts = useSelector((state: RootState) => state.nft.nfts)
   const isLoading = useSelector((state: RootState) => state.nft.isLoading)
+  const isError = useSelector((state: RootState) => state.nft.isError)
 
   useEffect(() => {
     dispatch(nftRequest({}))
@@ -22,6 +24,7 @@ const RightBox: React.FC = () => {
   return (
     <RightBoxStyle>
       {isLoading && <LinearProgress /> }
+      {isError && <Alert severity="error">There's an error while loading Nfts!</Alert> }
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Grid container spacing={2}>
           {nfts &&

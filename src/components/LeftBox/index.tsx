@@ -340,6 +340,13 @@ const LeftBox: React.FC = () => {
           <Typography>{formatAmount(eth)} ETH</Typography>
         </Box>
         <Box className="box-balance-item">
+          <Image
+            src="/coin/USDC.svg"
+            alt="currency"
+            width={24}
+            height={24}
+            objectFit="contain"
+          />
           <Typography>{formatAmount(usdc)} USDC</Typography>
         </Box>
       </Box>}
