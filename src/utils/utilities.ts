@@ -1,7 +1,7 @@
 import supportedChains from './chains'
 import { IChainData } from './types'
 
-export function getChainData(chainId?: number): IChainData {
+export function getChainData(chainId?: number): IChainData | null {
   if (!chainId) {
     return null
   }
