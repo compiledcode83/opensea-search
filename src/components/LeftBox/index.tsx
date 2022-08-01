@@ -37,29 +37,7 @@ const providerOptions = {
     options: {
       infuraId: INFURA_ID, // required
     },
-  },
-  'custom-walletlink': {
-    display: {
-      logo: 'https://play-lh.googleusercontent.com/PjoJoG27miSglVBXoXrxBSLveV6e3EeBPpNY55aiUUBM9Q1RCETKCOqdOkX2ZydqVf0',
-      name: 'Coinbase',
-      description: 'Connect to Coinbase Wallet (not Coinbase App)',
-    },
-    options: {
-      appName: 'Coinbase', // Your app name
-      networkUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`,
-      chainId: 1,
-    },
-    package: WalletLink,
-    connector: async (_: any, options: { appName: any; networkUrl: any; chainId: any }) => {
-      const { appName, networkUrl, chainId } = options
-      const walletLink = new WalletLink({
-        appName,
-      })
-      const provider = walletLink.makeWeb3Provider(networkUrl, chainId)
-      await provider.enable()
-      return provider
-    },
-  },
+  }
 }
 
 let web3Modal: Web3Modal
@@ -141,7 +119,6 @@ const LeftBox: React.FC = () => {
 
   const [tokenIds, setTokenIds] = useState<string>('')
   const [owner, setOwner] = useState<string>('')
-  const [name, setName] = useState<string>('')
   const [collection, setCollection] = useState<string>('')
   const [collectionSlug, setCollectionSlug] = useState<string>('')
   const [collectionEditor, setCollectionEditor] = useState<string>('')
@@ -310,10 +287,12 @@ const LeftBox: React.FC = () => {
 
   useEffect(() => {
     makeDispatch(nftRequest({
-      name,
       owner,
+      token_ids: tokenIds,
       collection,
-      offset
+      collection_slug: collectionSlug,
+      collection_editor: collectionEditor,
+      asset_contract_address: assetContractAddress,
     }))
   }, [offset])
 
