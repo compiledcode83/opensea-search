@@ -1,7 +1,7 @@
 // node_modules
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 
-const API_URL = 'https://api.opensea.io/api/v1/assets';
+const API_URL = 'https://api.opensea.io/api/v1/assets?asset_contract_address=0x3CD266509D127d0Eac42f4474F57D0526804b44e';
 
 interface ProtoType {
   next: string,

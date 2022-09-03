@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import { providers } from 'ethers'
-import WalletLink from 'walletlink'
 import Web3Modal from 'web3modal'
 import Web3 from 'web3'
-import Image from 'next/image'
 
 import {
-  Box, Grid, Typography, IconButton
+  Box, Typography, IconButton
 } from '@mui/material'
 import ChevronLeft from '@mui/icons-material/ChevronLeft'
 import ChevronRight from '@mui/icons-material/ChevronRight'
@@ -19,10 +17,7 @@ import CustomInput from '../CustomInput'
 import { nftRequest } from '../../store/nftSlice'
 import { useDispatch } from 'react-redux'
 
-const usdcTokenAbi = require('../../contracts/abi/usdc.json')
-
 const INFURA_ID = 'cee807039b5a4f25b41fa4e8920eb273'
-const USDC_ADDRESS = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
 
 export const formatAmount = (amount: any, min = 2, max = 4) => {
   return parseFloat(amount ? amount.toString() : '0').toLocaleString('en-US', {
@@ -218,25 +213,6 @@ const LeftBox: React.FC = () => {
     return balance;
   }
 
-  useEffect(() => {
-    if(address) {
-      web3.eth.getBalance(address).then((result: any) => {
-        setEth(result / Math.pow(10, 18))
-      })
-      .catch((error) => {
-        console.log(error)
-      })
- 
-      const setUsdcBalance = async () => {
-        let contract = new web3.eth.Contract(usdcTokenAbi, USDC_ADDRESS);
-        let balance = await getBalance(contract, address);
-        setUsdc(balance)
-      }
-
-      setUsdcBalance()
-    }
-  }, [address])
-
   const chainData = getChainData(chainId)
 
   const handleOwnerChange = (e: any) => {
@@ -270,7 +246,7 @@ const LeftBox: React.FC = () => {
 
   const handleNextPage = () => {
     setOffset(offset + 20)
-  }  
+  }
 
   const handleSearch = () => {
     setOffset(0)
@@ -306,58 +282,10 @@ const LeftBox: React.FC = () => {
         onClick={connect}
         />
       }
-      {web3Provider && 
-      <Box className="box-balance">
-        <Box className="box-balance-item">
-          <Image
-            src="/coin/ETH.svg"
-            alt="currency"
-            width={24}
-            height={24}
-            objectFit="contain"
-          />
-          <Typography>{formatAmount(eth)} ETH</Typography>
-        </Box>
-        <Box className="box-balance-item">
-          <Image
-            src="/coin/USDC.svg"
-            alt="currency"
-            width={24}
-            height={24}
-            objectFit="contain"
-          />
-          <Typography>{formatAmount(usdc)} USDC</Typography>
-        </Box>
-      </Box>}
       <CustomInput
         placeholder="owner"
         value={owner}
         onChange={handleOwnerChange}
-      />
-      <CustomInput
-        placeholder="token_ids"
-        value={tokenIds}
-        onChange={handleTokenIdsChange}
-      />
-      <CustomInput
-        placeholder="collection"
-        value={collection}
-        onChange={handleCollectionChange}
-      />
-      <CustomInput
-        placeholder="collection_slug"
-        value={collectionSlug}
-        onChange={handleCollectionSlugChange}
-      />
-      <CustomInput
-        placeholder="collection_editor"
-        value={collectionEditor}
-        onChange={handleCollectionEditorChange}
-      />
-      <CustomInput
-        placeholder="asset_contract_addresses"
-        value={assetContractAddress}
-        onChange={handleAssetContractAddressChange}
       />
       <CustomButton
         onClick={handleSearch}
