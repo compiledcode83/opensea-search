@@ -2,11 +2,12 @@ import styled from '@emotion/styled'
 
 export const CustomButtonStyle = styled('div')(({ theme }: any) => {
   return {
+    display: 'flex',
+    alignItems: 'center',
     button: {
       padding: '0.5rem 2rem',
       backgroundColor: theme.text.purple,
       borderRadius: '3rem',
-      marginBottom: '2rem',
       '&:hover': {
         backgroundColor: theme.button.purple2
       },
