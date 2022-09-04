@@ -43,6 +43,7 @@ const nftsSlice = createSlice({
     },
     setCursor(state: nftsState, action) {
       state.cursor = action.payload.cursor
+      state.account = action.payload.account
     }
   },
 });

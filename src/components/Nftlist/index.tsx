@@ -31,11 +31,11 @@ const Nftlist: React.FC = () => {
 
   return (
     <NftlistStyle>
-      {isLoading && <LinearProgress className="list-loadingprogress"/> }
-      {isError && <Alert severity="error">There's an error while loading Nfts!</Alert> }
-      {!!account && nfts.length === 0 &&
+      {!isLoading && !isError && !!account && nfts.length === 0 &&
         <Typography>No Nfts</Typography>
       }
+      {isLoading && <LinearProgress className="list-loadingprogress"/> }
+      {isError && <Alert severity="error">There's an error while loading Nfts!</Alert> }
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} className="grid-nfts">
         <Grid container spacing={2}>
           {nfts &&

@@ -3,7 +3,7 @@ import axios from 'axios'
 const learnweb3Address = '0x1Ed25648382c2e6Da067313e5DAcb4F138Bc8b33'
 const buildspaceAddress = '0x3cd266509d127d0eac42f4474f57d0526804b44e'
 
-const limit = 12
+const limit = 2
 
 export const nftApi = {
   async requestNft(params: any) {

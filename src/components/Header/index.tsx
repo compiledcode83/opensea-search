@@ -147,7 +147,7 @@ const Header: React.FC = () => {
 
   const disconnect = useCallback(
     async function () {
-      makeDispatch(setCursor(""))
+      makeDispatch(setCursor({cursor: "", account: ""}))
       await web3Modal.clearCachedProvider()
       if (provider?.disconnect && typeof provider.disconnect === 'function') {
         await provider.disconnect()
