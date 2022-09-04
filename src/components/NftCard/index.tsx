@@ -28,6 +28,13 @@ const formatUrl = (url: string) => {
     return url
 }
 
+const isImage = (url: string) => {
+  if (url.indexOf(".mp4") === (url.length - 4)) {
+    return false
+  }
+  return true
+}
+
 const NftCard: React.FC<any> = (props: any) => {
   const {
     url,
@@ -46,8 +53,8 @@ const NftCard: React.FC<any> = (props: any) => {
           <a>
             <Box className="nft-card-img">
               <Box className="nft-card-img-inside">
-                {image && (
-                  <Image
+                {image && 
+                  isImage(image) ? (<Image
                     loader={() => formatUrl(image)}
                     src={formatUrl(image)}
                     placeholder="blur"
@@ -55,8 +62,11 @@ const NftCard: React.FC<any> = (props: any) => {
                     alt="nft-image"
                     layout="fill"
                     objectFit="cover"
-                  />
-                )}
+                  />) :
+                  (<video controls style={{ width: '100%', height: '100%' }}>
+                    <source src={formatUrl(image)} />
+                  </video>)
+                }
               </Box>
             </Box>
           </a>
