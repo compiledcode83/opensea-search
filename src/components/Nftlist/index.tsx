@@ -12,6 +12,7 @@ import CustomButton from '../CustomButton'
 import NftCard from '../NftCard'
 
 import { NftlistStyle } from './index.style'
+import Typography from '@mui/material/Typography';
 
 const Nftlist: React.FC = () => {
   const dispatch = useDispatch()
@@ -32,6 +33,9 @@ const Nftlist: React.FC = () => {
     <NftlistStyle>
       {isLoading && <LinearProgress className="list-loadingprogress"/> }
       {isError && <Alert severity="error">There's an error while loading Nfts!</Alert> }
+      {!!account && nfts.length === 0 &&
+        <Typography>No Nfts</Typography>
+      }
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} className="grid-nfts">
         <Grid container spacing={2}>
           {nfts &&
