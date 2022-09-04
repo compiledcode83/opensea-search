@@ -4,19 +4,29 @@ import {
   Alert,
   LinearProgress
 } from '@mui/material'
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../store'
+import { nftRequest } from '../../store/nftSlice'
+import CustomButton from '../CustomButton'
 import NftCard from '../NftCard'
 
 import { NftlistStyle } from './index.style'
-import { nftRequest } from '../../store/nftSlice';
 
 const Nftlist: React.FC = () => {
   const dispatch = useDispatch()
+  const account = useSelector((state: RootState) => state.nft.account)
   const nfts = useSelector((state: RootState) => state.nft.nfts)
+  const cursor = useSelector((state: RootState) => state.nft.cursor)
   const isLoading = useSelector((state: RootState) => state.nft.isLoading)
   const isError = useSelector((state: RootState) => state.nft.isError)
+  const handleShowMore = useCallback(() => {
+    if (cursor && account)
+      dispatch(nftRequest({
+        account,
+        cursor
+      }))
+  }, [cursor, account])
 
   return (
     <NftlistStyle>
@@ -26,17 +36,20 @@ const Nftlist: React.FC = () => {
         <Grid container spacing={2}>
           {nfts &&
             nfts.map((nft: any, i) => (
-              <Grid key={i} item xs={6} sm={4} md={4} lg={3}>
+              <Grid key={i} item xs={4} sm={4} md={3} lg={2}>
                 <NftCard
-                  image={nft.image_preview_url}
+                  image={nft.image}
                   name={nft.name}
-                  url={nft.permalink}
-                  date={nft.asset_contract.created_date}
+                  url={nft.external_url}
                 />
               </Grid>
             ))}
         </Grid>
       </Box>
+      <CustomButton
+        caption="Show More"
+        onClick={handleShowMore}
+      />
     </NftlistStyle>
   )
 }

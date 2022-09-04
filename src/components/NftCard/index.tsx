@@ -21,6 +21,13 @@ const formatDate = (date: string) => {
   return `${YYYY}-${MM}-${DD} ${HH}:${mm}`
 }
 
+const formatUrl = (url: string) => {
+  if (url.indexOf("ipfs://") === 0) {
+    return `https://ipfs.io/ipfs/${url.slice(7, url.length)}`
+  } else
+    return url
+}
+
 const NftCard: React.FC<any> = (props: any) => {
   const {
     url,
@@ -41,10 +48,10 @@ const NftCard: React.FC<any> = (props: any) => {
               <Box className="nft-card-img-inside">
                 {image && (
                   <Image
-                    loader={() => image}
-                    src={image}
+                    loader={() => formatUrl(image)}
+                    src={formatUrl(image)}
                     placeholder="blur"
-                    blurDataURL={image}
+                    blurDataURL={formatUrl(image)}
                     alt="nft-image"
                     layout="fill"
                     objectFit="cover"

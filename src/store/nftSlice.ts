@@ -1,26 +1,23 @@
 // node_modules
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 
-const API_URL = 'https://api.opensea.io/api/v1/assets?asset_contract_address=0x3CD266509D127d0Eac42f4474F57D0526804b44e';
-
-interface ProtoType {
-  next: string,
-  assets: [],
-  previous: string
-}
 
 interface nftsState {
   nfts: [];
   count: number;
   isLoading: boolean;
   isError: boolean;
+  cursor: string;
+  account: string;
 };
 
 const initialState: nftsState = {
   nfts: [],
+  cursor: "",
   count: 0,
   isLoading: false,
-  isError: false
+  isError: false,
+  account: "",
 };
 
 const nftsSlice = createSlice({
@@ -29,11 +26,13 @@ const nftsSlice = createSlice({
   reducers: {
     nftRequest(state: nftsState, action) {
       state.isLoading = true
+      state.account = action.payload
     },
-    nftRequestSuccess(state: nftsState, action: PayloadAction<ProtoType>) {
+    nftRequestSuccess(state: nftsState, action: PayloadAction<any>) {
       state.isLoading = false
       state.isError = false
-      state.nfts = action.payload.assets
+      state.nfts = action.payload.nfts
+      state.cursor = action.payload.cursor
     },
     nftRequestFailure(state: nftsState) {
       state.isLoading = false

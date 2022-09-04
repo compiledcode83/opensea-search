@@ -1,9 +1,7 @@
 // node_modules
 import {
-  AnyAction,
   combineReducers,
   configureStore,
-  Reducer,
 } from "@reduxjs/toolkit";
 import { createRouterMiddleware, initialRouterState, routerReducer } from 'connected-next-router'
 import createSagaMiddleware from 'redux-saga'
