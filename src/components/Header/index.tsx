@@ -13,7 +13,7 @@ import ChevronRight from '@mui/icons-material/ChevronRight'
 import { ellipseAddress, getChainData } from '../../utils/utilities'
 import CustomButton from '../CustomButton'
 import { HeaderStyle } from './index.style'
-import { nftRequest } from '../../store/nftSlice'
+import { nftRequest, setCursor } from '../../store/nftSlice'
 import { useDispatch } from 'react-redux'
 
 const INFURA_ID = 'cee807039b5a4f25b41fa4e8920eb273'
@@ -147,6 +147,7 @@ const Header: React.FC = () => {
 
   const disconnect = useCallback(
     async function () {
+      makeDispatch(setCursor(""))
       await web3Modal.clearCachedProvider()
       if (provider?.disconnect && typeof provider.disconnect === 'function') {
         await provider.disconnect()
@@ -205,19 +206,12 @@ const Header: React.FC = () => {
     }
   }, [provider, disconnect])
   
-  const handlePrevPage = () => {
-    if(offset > 0)
-      setOffset(offset - 20)
-  }
-
-  const handleNextPage = () => {
-    setOffset(offset + 20)
-  }
-
   useEffect(() => {
     if (address) {
-      console.log(address)
-      makeDispatch(nftRequest(address))
+      makeDispatch(nftRequest({
+        account: address,
+        cursor: ""
+      }))
     }
   }, [address])
 
@@ -225,16 +219,10 @@ const Header: React.FC = () => {
     <HeaderStyle>
       {web3Provider ?
       <>
-        <IconButton className="button-prev" aria-label="left" onClick={handlePrevPage}>
-          <ChevronLeft/>
-        </IconButton>
         <CustomButton
           caption={ellipseAddress(address)}
           onClick={disconnect}
         />
-        <IconButton className="button-next" aria-label="right" onClick={handleNextPage}>
-          <ChevronRight />
-         </IconButton>
       </> : <CustomButton
         caption="Connect"
         onClick={connect}

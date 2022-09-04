@@ -4,6 +4,7 @@ export const CustomButtonStyle = styled('div')(({ theme }: any) => {
   return {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
     button: {
       padding: '0.5rem 2rem',
       backgroundColor: theme.text.purple,

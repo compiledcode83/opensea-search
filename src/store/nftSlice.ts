@@ -3,7 +3,7 @@ import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 
 
 interface nftsState {
-  nfts: [];
+  nfts: any[];
   count: number;
   isLoading: boolean;
   isError: boolean;
@@ -31,12 +31,18 @@ const nftsSlice = createSlice({
     nftRequestSuccess(state: nftsState, action: PayloadAction<any>) {
       state.isLoading = false
       state.isError = false
-      state.nfts = action.payload.nfts
+      if (state.cursor) {
+        state.nfts = [...state.nfts, ...action.payload.nfts]
+      } else
+        state.nfts = [...action.payload.nfts]
       state.cursor = action.payload.cursor
     },
     nftRequestFailure(state: nftsState) {
       state.isLoading = false
       state.isError = true
+    },
+    setCursor(state: nftsState, action) {
+      state.cursor = action.payload.cursor
     }
   },
 });
@@ -46,7 +52,8 @@ const nftsActions = nftsSlice.actions;
 export const {
   nftRequest,
   nftRequestSuccess,
-  nftRequestFailure
+  nftRequestFailure,
+  setCursor
 } = nftsActions
 
 export default nftsSlice.reducer;

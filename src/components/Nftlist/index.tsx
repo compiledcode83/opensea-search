@@ -30,9 +30,9 @@ const Nftlist: React.FC = () => {
 
   return (
     <NftlistStyle>
-      {isLoading && <LinearProgress /> }
+      {isLoading && <LinearProgress className="list-loadingprogress"/> }
       {isError && <Alert severity="error">There's an error while loading Nfts!</Alert> }
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} className="grid-nfts">
         <Grid container spacing={2}>
           {nfts &&
             nfts.map((nft: any, i) => (
@@ -46,10 +46,12 @@ const Nftlist: React.FC = () => {
             ))}
         </Grid>
       </Box>
-      <CustomButton
-        caption="Show More"
-        onClick={handleShowMore}
-      />
+      { !!cursor &&
+        <CustomButton
+          caption="Show More"
+          onClick={handleShowMore}
+        />
+      }
     </NftlistStyle>
   )
 }
