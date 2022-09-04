@@ -2,15 +2,8 @@ import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import { providers } from 'ethers'
 import Web3Modal from 'web3modal'
-import Web3 from 'web3'
 
-import {
-  Box, Typography, IconButton
-} from '@mui/material'
-import ChevronLeft from '@mui/icons-material/ChevronLeft'
-import ChevronRight from '@mui/icons-material/ChevronRight'
-
-import { ellipseAddress, getChainData } from '../../utils/utilities'
+import { ellipseAddress } from '../../utils/utilities'
 import CustomButton from '../CustomButton'
 import { HeaderStyle } from './index.style'
 import { nftRequest, setCursor } from '../../store/nftSlice'
@@ -107,19 +100,7 @@ const reducer = (state: StateType, action: ActionType): StateType => {
 const Header: React.FC = () => {
   const makeDispatch = useDispatch()
   const [state, dispatch] = useReducer(reducer, initialState)
-  const [eth, setEth] = useState(0)
-  const [usdc, setUsdc] = useState(0)
-  const [offset, setOffset] = useState<number>(0)
-
-  const [tokenIds, setTokenIds] = useState<string>('')
-  const [owner, setOwner] = useState<string>('')
-  const [collection, setCollection] = useState<string>('')
-  const [collectionSlug, setCollectionSlug] = useState<string>('')
-  const [collectionEditor, setCollectionEditor] = useState<string>('')
-  const [assetContractAddress, setAssetContractAddress] = useState<string>('')
   const { provider, web3Provider, address, chainId } = state
-
-  const web3 = new Web3(Web3.givenProvider)
 
   const connect = useCallback(async function () {
     // This is the initial `provider` that is returned when
@@ -218,12 +199,10 @@ const Header: React.FC = () => {
   return (
     <HeaderStyle>
       {web3Provider ?
-      <>
         <CustomButton
           caption={ellipseAddress(address)}
           onClick={disconnect}
-        />
-      </> : <CustomButton
+        /> : <CustomButton
         caption="Connect"
         onClick={connect}
         />
