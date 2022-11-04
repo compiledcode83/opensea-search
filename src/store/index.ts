@@ -3,34 +3,20 @@ import {
   combineReducers,
   configureStore,
 } from "@reduxjs/toolkit";
-import { createRouterMiddleware, initialRouterState, routerReducer } from 'connected-next-router'
-import createSagaMiddleware from 'redux-saga'
-import Router from 'next/router'
-import rootSaga from './saga'
+import {
+  routerReducer,
+} from "connected-next-router";
 
 // slices
-import nftSlice from "./nftSlice";
-
-const routerMiddleware = createRouterMiddleware()
-const sagaMiddleware = createSagaMiddleware()
-const { asPath } = Router.router || {}
+import walletSlice from "./walletSlice";
 
 const reducer = combineReducers({
-  router: routerReducer,
-  nft: nftSlice,
+  wallet: walletSlice,
 });
 
 const store = configureStore({
-  preloadedState: {
-    router: initialRouterState(asPath)
-  },
   reducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false, thunk: false })
-      .concat(routerMiddleware)
-      .concat(sagaMiddleware)
-})
-sagaMiddleware.run(rootSaga)
+});
 
-export type RootState = ReturnType<typeof store.getState>
-export default store
+export type RootState = ReturnType<typeof store.getState>;
+export default store;

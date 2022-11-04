@@ -1,13 +1,13 @@
 import type { NextPage } from 'next'
 import Header from '../components/Header'
-import Nftlist from '../components/Nftlist'
+import Main from '../components/Main'
 import { HomeStyle } from '../styles/home.style'
 
 const Home: NextPage = () => {
   return (
     <HomeStyle>
       <Header />
-      <Nftlist />
+      <Main />
     </HomeStyle>
   )
 }

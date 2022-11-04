@@ -1,106 +1,18 @@
-import React, { useCallback, useEffect, useReducer, useState } from 'react'
-import WalletConnectProvider from '@walletconnect/web3-provider'
+import React, { useCallback, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { providers } from 'ethers'
-import Web3Modal from 'web3modal'
 
-import { ellipseAddress } from '../../utils/utilities'
 import CustomButton from '../CustomButton'
 import { HeaderStyle } from './index.style'
-import { nftRequest, setCursor } from '../../store/nftSlice'
-import { useDispatch } from 'react-redux'
+import { ellipseAddress } from "../../utils/utilities"
+import { web3Modal } from '../../utils/web3Modal'
+import { resetWalletInfo, setAddress, setWalletInfo } from '../../store/walletSlice'
+import { RootState } from '../../store/index';
 
-const INFURA_ID = 'cee807039b5a4f25b41fa4e8920eb273'
-
-export const formatAmount = (amount: any, min = 2, max = 4) => {
-  return parseFloat(amount ? amount.toString() : '0').toLocaleString('en-US', {
-    minimumFractionDigits: min,
-    maximumFractionDigits: max
-  })
-}
-
-const providerOptions = {
-  walletconnect: {
-    package: WalletConnectProvider, // required
-    options: {
-      infuraId: INFURA_ID, // required
-    },
-  }
-}
-
-let web3Modal: Web3Modal
-if (typeof window !== 'undefined') {
-  web3Modal = new Web3Modal({
-    network: 'mainnet', // optional
-    cacheProvider: true,
-    providerOptions, // required
-  })
-}
-
-type StateType = {
-  provider?: any
-  web3Provider?: any
-  address?: string
-  chainId?: number
-}
-
-type ActionType =
-  | {
-      type: 'SET_WEB3_PROVIDER'
-      provider?: StateType['provider']
-      web3Provider?: StateType['web3Provider']
-      address?: StateType['address']
-      chainId?: StateType['chainId']
-    }
-  | {
-      type: 'SET_ADDRESS'
-      address?: StateType['address']
-    }
-  | {
-      type: 'SET_CHAIN_ID'
-      chainId?: StateType['chainId']
-    }
-  | {
-      type: 'RESET_WEB3_PROVIDER'
-    }
-
-const initialState: StateType = {
-  provider: null,
-  web3Provider: null,
-  address: '',
-  chainId: 0,
-}
-
-const reducer = (state: StateType, action: ActionType): StateType => {
-  switch (action.type) {
-    case 'SET_WEB3_PROVIDER':
-      return {
-        ...state,
-        provider: action.provider,
-        web3Provider: action.web3Provider,
-        address: action.address,
-        chainId: action.chainId,
-      }
-    case 'SET_ADDRESS':
-      return {
-        ...state,
-        address: action.address,
-      }
-    case 'SET_CHAIN_ID':
-      return {
-        ...state,
-        chainId: action.chainId,
-      }
-    case 'RESET_WEB3_PROVIDER':
-      return initialState
-    default:
-      throw new Error()
-  }
-}
 
 const Header: React.FC = () => {
-  const makeDispatch = useDispatch()
-  const [state, dispatch] = useReducer(reducer, initialState)
-  const { provider, web3Provider, address, chainId } = state
+  const dispatch = useDispatch();
+  const { provider, web3Provider, address, chainId } = useSelector((state: RootState) => state.wallet)
 
   const connect = useCallback(async function () {
     // This is the initial `provider` that is returned when
@@ -117,25 +29,21 @@ const Header: React.FC = () => {
 
     const network = await web3Provider.getNetwork()
 
-    dispatch({
-      type: 'SET_WEB3_PROVIDER',
+    dispatch(setWalletInfo({
       provider,
       web3Provider,
       address,
       chainId: network.chainId,
-    })
+    }))
   }, [])
 
   const disconnect = useCallback(
     async function () {
-      makeDispatch(setCursor({cursor: "", account: ""}))
       await web3Modal.clearCachedProvider()
       if (provider?.disconnect && typeof provider.disconnect === 'function') {
         await provider.disconnect()
       }
-      dispatch({
-        type: 'RESET_WEB3_PROVIDER',
-      })
+      dispatch(resetWalletInfo())
     },
     [provider]
   )
@@ -155,10 +63,7 @@ const Header: React.FC = () => {
       const handleAccountsChanged = (accounts: string[]) => {
         // eslint-disable-next-line no-console
         console.log('accountsChanged', accounts)
-        dispatch({
-          type: 'SET_ADDRESS',
-          address: accounts[0],
-        })
+        dispatch(setAddress(accounts[0]))
       }
 
       // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
@@ -188,13 +93,7 @@ const Header: React.FC = () => {
   }, [provider, disconnect])
   
   useEffect(() => {
-    if (address) {
-      makeDispatch(nftRequest({
-        account: address,
-        cursor: ""
-      }))
-    }
-  }, [address])
+  }, [chainId])
 
   return (
     <HeaderStyle>

@@ -1,9 +1,9 @@
 import '../styles/globals.css'
 import { ThemeProvider } from '@mui/material'
-import { Provider } from 'react-redux'
 import type { AppProps } from 'next/app'
 import theme from '../styles/theme/theme'
-import store from '../store'
+import store from '../store';
+import { Provider } from 'react-redux';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </ThemeProvider>
     </Provider>
-  )
+  );
 }
 
 export default MyApp
